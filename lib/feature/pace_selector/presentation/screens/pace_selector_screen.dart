@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:swim_success/core/extension/color_extension.dart';
 import 'package:swim_success/core/extension/theme_extension.dart';
+import 'package:swim_success/feature/pace_selector/domain/enum/pace_state_enum.dart';
+import 'package:swim_success/feature/pace_selector/domain/usecases/post_pace_use_case.dart';
+import 'package:swim_success/feature/pace_selector/presentation/notifiers/pace_notifier.dart';
+import 'package:swim_success/feature/pace_selector/presentation/notifiers/post_pace_notifier.dart';
 import 'package:swim_success/feature/pace_selector/presentation/widgets/widgets.dart';
 
 /// pace selector screen with 100m fastest user run
@@ -11,6 +16,64 @@ class PaceSelectorScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final paceValue = ref.watch(paceProvider);
+
+    ref.listen(postPaceProvider, (prev, next) async {
+      if (next.isLoading || next.hasError) {
+        if (next.isLoading) {
+          await showDialog<String>(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => Dialog(
+              backgroundColor: Colors.white54,
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: CircularProgressIndicator(
+                        color: switch (paceValue.stateType) {
+                          PaceStateEnum.beginner =>
+                            context.theme.appColors.beginner,
+                          PaceStateEnum.intermediate =>
+                            context.theme.appColors.intermediate,
+                          PaceStateEnum.advanced =>
+                            context.theme.appColors.advanced,
+                          PaceStateEnum.elite => context.theme.appColors.elite,
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    const Text(
+                      'Завантаження...',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        } else if (prev?.isLoading == true) {
+          Navigator.of(context).pop();
+
+          if (next.hasError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Помилка: ${next.error}')),
+            );
+          }
+        }
+      }
+    });
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -44,11 +107,24 @@ class PaceSelectorScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 15),
                 Text(
-                  'Beginner',
+                  switch (paceValue.stateType) {
+                    PaceStateEnum.beginner => 'Beginner',
+                    PaceStateEnum.intermediate => 'Intermediate',
+                    PaceStateEnum.advanced => 'Advanced',
+                    PaceStateEnum.elite => 'Elite',
+                  },
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: context.theme.appColors.beginner,
+                    color: switch (paceValue.stateType) {
+                      PaceStateEnum.beginner =>
+                        context.theme.appColors.beginner,
+                      PaceStateEnum.intermediate =>
+                        context.theme.appColors.intermediate,
+                      PaceStateEnum.advanced =>
+                        context.theme.appColors.advanced,
+                      PaceStateEnum.elite => context.theme.appColors.elite,
+                    },
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -58,10 +134,22 @@ class PaceSelectorScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 15),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await ref
+                        .read(postPaceProvider.notifier)
+                        .sendPace(paceValue.seconds.toInt());
+                  },
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(
-                      context.theme.appColors.beginner,
+                      switch (paceValue.stateType) {
+                        PaceStateEnum.beginner =>
+                          context.theme.appColors.beginner,
+                        PaceStateEnum.intermediate =>
+                          context.theme.appColors.intermediate,
+                        PaceStateEnum.advanced =>
+                          context.theme.appColors.advanced,
+                        PaceStateEnum.elite => context.theme.appColors.elite,
+                      },
                     ),
                   ),
                   child: Row(

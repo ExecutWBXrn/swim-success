@@ -8,13 +8,17 @@ part of 'theme.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// Main theme of application
 
 @ProviderFor(theme)
 final themeProvider = ThemeProvider._();
 
+/// Main theme of application
+
 final class ThemeProvider
     extends $FunctionalProvider<ThemeData, ThemeData, ThemeData>
     with $Provider<ThemeData> {
+  /// Main theme of application
   ThemeProvider._()
     : super(
         from: null,

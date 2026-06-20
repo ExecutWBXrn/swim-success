@@ -8,13 +8,17 @@ part of 'router.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// the router of an application
 
 @ProviderFor(router)
 final routerProvider = RouterProvider._();
 
+/// the router of an application
+
 final class RouterProvider
     extends $FunctionalProvider<GoRouter, GoRouter, GoRouter>
     with $Provider<GoRouter> {
+  /// the router of an application
   RouterProvider._()
     : super(
         from: null,
@@ -48,4 +52,4 @@ final class RouterProvider
   }
 }
 
-String _$routerHash() => r'da6701c8931e22cde0d5bd9d8fd3dfd32e5ea869';
+String _$routerHash() => r'a31eb60ad4b76bd476acc122ae4fe3f46444242d';

@@ -33,11 +33,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: any
+  fpdart: ^1.2.0
   freezed: ^3.2.5
   go_router: ^17.3.0
   hooks_riverpod: ^3.3.2
   riverpod: ^3.3.2
   riverpod_annotation: ^4.0.3
+  talker_riverpod_logger: ^5.1.17
   very_good_analysis: ^10.3.0
 
 
