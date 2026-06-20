@@ -1,9 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'router_export_screens.dart';
+import 'package:swim_success/core/router/router_export_screens.dart';
 
 part 'router.g.dart';
 
+/// the router of an application
 @riverpod
 GoRouter router(Ref _) => GoRouter(
   initialLocation: '/pace_selector',
@@ -12,7 +13,7 @@ GoRouter router(Ref _) => GoRouter(
       path: '/pace_selector',
       name: 'PaceSelector',
       builder: (context, state) {
-        return PaceSelectorScreen();
+        return const PaceSelectorScreen();
       },
     ),
   ],

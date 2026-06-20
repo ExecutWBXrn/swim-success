@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 
+/// custom thumb for slider which let define border
 class ThumbBorderComponentCanvas extends SliderComponentShape {
-  final double radius;
-  final double borderWidth;
-  final Color borderColor;
-  final Color thumbColor;
-
+  /// initialization
   const ThumbBorderComponentCanvas({
-    this.radius = 8,
-    this.borderWidth = 6,
     required this.borderColor,
     required this.thumbColor,
+    this.radius = 8,
+    this.borderWidth = 6,
   });
+
+  /// radius of thumb
+  final double radius;
+
+  /// border width
+  final double borderWidth;
+
+  /// border color
+  final Color borderColor;
+
+  /// thumbColor
+  final Color thumbColor;
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
@@ -44,7 +53,8 @@ class ThumbBorderComponentCanvas extends SliderComponentShape {
       ..style = PaintingStyle.stroke
       ..strokeWidth = borderWidth;
 
-    canvas.drawCircle(center, radius, thumbPaint);
-    canvas.drawCircle(center, radius, borderPaint);
+    canvas
+      ..drawCircle(center, radius, thumbPaint)
+      ..drawCircle(center, radius, borderPaint);
   }
 }

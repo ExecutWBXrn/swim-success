@@ -6,6 +6,7 @@ import 'package:swim_success/feature/pace_selector/presentation/widgets/widgets.
 
 /// pace selector screen with 100m fastest user run
 class PaceSelectorScreen extends ConsumerWidget {
+  /// init
   const PaceSelectorScreen({super.key});
 
   @override
@@ -18,7 +19,7 @@ class PaceSelectorScreen extends ConsumerWidget {
             child: Column(
               children: [
                 const Text(
-                  "What is your fastest 100m freestyle?",
+                  'What is your fastest 100m freestyle?',
                   maxLines: 3,
                   style: TextStyle(
                     color: Colors.white,
@@ -27,14 +28,14 @@ class PaceSelectorScreen extends ConsumerWidget {
                   ),
                 ),
                 const Text(
-                  "This helps build more accurate plan for you",
+                  'This helps build more accurate plan for you',
                   style: TextStyle(color: Colors.white54, fontSize: 18),
                 ),
                 const SizedBox(height: 25),
                 const TimerPaceWidget(),
                 const SizedBox(height: 35),
                 const Text(
-                  "THAT PUTS YOU AT",
+                  'THAT PUTS YOU AT',
                   style: TextStyle(
                     color: Colors.white54,
                     fontSize: 12,
@@ -43,7 +44,7 @@ class PaceSelectorScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 15),
                 Text(
-                  "Beginner",
+                  'Beginner',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -68,7 +69,7 @@ class PaceSelectorScreen extends ConsumerWidget {
                     spacing: 10,
                     children: [
                       Text(
-                        "Continue",
+                        'Continue',
                         style: TextStyle(
                           color: context.theme.appColors.background,
                         ),
@@ -82,7 +83,7 @@ class PaceSelectorScreen extends ConsumerWidget {
                 ),
                 TextButton(
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "I don't know my pace, skip this",
                     style: TextStyle(
                       color: Colors.white70,

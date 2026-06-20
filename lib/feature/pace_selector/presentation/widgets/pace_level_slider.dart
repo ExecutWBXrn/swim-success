@@ -1,38 +1,79 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:swim_success/core/canvas/thumb_border_component_canvas.dart';
 import 'package:swim_success/core/extension/color_extension.dart';
 import 'package:swim_success/core/extension/theme_extension.dart';
 
+/// Slider which defines level of user
 class PaceLevelSlider extends HookConsumerWidget {
+  /// init
   const PaceLevelSlider({super.key});
 
+  /// min slider value
   static const double minSliderTimeSec = 45;
+
+  /// max slider value
   static const double maxSliderTimeSec = 240;
 
-  Widget buildTickMark(String label) {
+  /// tick under slider
+  Widget _buildTickMark(String label) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Container(height: 5, width: 2.5, color: Colors.white54),
-        const SizedBox(height: 4),
-        OverflowBox(
-          maxWidth: 50,
+        const SizedBox(height: 40),
+        SizedOverflowBox(
+          size: Size.zero,
           child: Text(
             label,
-            style: const TextStyle(color: Colors.white54, fontSize: 12),
-            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white54),
           ),
         ),
       ],
     );
   }
 
+  /// text that defines user level over slider
+  Widget _textLevelOverSlider(
+    String label, {
+    int flex = 1,
+    Color? color,
+    bool isCurrent = false,
+  }) {
+    return Expanded(
+      flex: flex,
+      child: Text(
+        label,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: color ?? Colors.white54,
+          fontSize: isCurrent ? 13 : 11,
+          fontWeight: isCurrent ? FontWeight.w900 : null,
+        ),
+      ),
+    );
+  }
+
+  /// color part of slider
+  Widget _sliderColorPart({
+    required Color color,
+    int flex = 1,
+    double height = 3,
+  }) {
+    return Expanded(
+      flex: flex,
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ValueNotifier<double> sliderVal = useState<double>(240);
+    final sliderVal = useState<double>(240);
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         padding: EdgeInsets.zero,
@@ -40,7 +81,7 @@ class PaceLevelSlider extends HookConsumerWidget {
         activeTrackColor: Colors.white12,
         inactiveTrackColor: Colors.white12,
         trackShape: const RectangularSliderTrackShape(),
-        thumbShape: ThumbBorderComponentCanvas(
+        thumbShape: const ThumbBorderComponentCanvas(
           borderColor: Colors.white,
           thumbColor: Colors.blue,
         ),
@@ -50,41 +91,14 @@ class PaceLevelSlider extends HookConsumerWidget {
         children: [
           Row(
             children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  "Elite",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white54, fontSize: 11),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  "Advanced",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white54, fontSize: 11),
-                ),
-              ),
-              Expanded(
+              _textLevelOverSlider('Elite'),
+              _textLevelOverSlider('Advanced', flex: 2),
+              _textLevelOverSlider('Intermediate', flex: 3),
+              _textLevelOverSlider(
+                'Beginner',
                 flex: 3,
-                child: Text(
-                  "Intermediate",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white54, fontSize: 11),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Text(
-                  "Beginner",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: context.theme.appColors.beginner,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
+                color: context.theme.appColors.beginner,
+                isCurrent: true,
               ),
             ],
           ),
@@ -93,81 +107,21 @@ class PaceLevelSlider extends HookConsumerWidget {
             children: [
               Row(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      height: 3,
-                      decoration: BoxDecoration(
-                        color: context.theme.appColors.elite,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(height: 40),
-                      SizedOverflowBox(
-                        size: Size(0, 0),
-                        child: Text(
-                          "1:10",
-                          style: TextStyle(color: Colors.white54),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
+                  _sliderColorPart(color: context.theme.appColors.elite),
+                  _buildTickMark('1:10'),
+                  _sliderColorPart(
+                    color: context.theme.appColors.advanced,
                     flex: 2,
-                    child: Container(
-                      height: 3,
-                      decoration: BoxDecoration(
-                        color: context.theme.appColors.advanced,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
                   ),
-                  Column(
-                    children: [
-                      SizedBox(height: 40),
-                      SizedOverflowBox(
-                        size: Size(0, 0),
-                        child: Text(
-                          "1:30",
-                          style: TextStyle(color: Colors.white54),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
+                  _buildTickMark('1:30'),
+                  _sliderColorPart(
+                    color: context.theme.appColors.intermediate,
                     flex: 3,
-                    child: Container(
-                      height: 3,
-                      decoration: BoxDecoration(
-                        color: context.theme.appColors.intermediate,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
                   ),
-                  Column(
-                    children: [
-                      SizedBox(height: 40),
-                      SizedOverflowBox(
-                        size: Size(0, 0),
-                        child: Text(
-                          "2:00",
-                          style: TextStyle(color: Colors.white54),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
+                  _buildTickMark('2:00'),
+                  _sliderColorPart(
+                    color: context.theme.appColors.beginner,
                     flex: 3,
-                    child: Container(
-                      height: 3,
-                      decoration: BoxDecoration(
-                        color: context.theme.appColors.beginner,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -176,7 +130,7 @@ class PaceLevelSlider extends HookConsumerWidget {
                   min: minSliderTimeSec,
                   max: maxSliderTimeSec,
                   value: sliderVal.value,
-                  onChanged: (double value) {
+                  onChanged: (value) {
                     sliderVal.value = value;
                   },
                 ),

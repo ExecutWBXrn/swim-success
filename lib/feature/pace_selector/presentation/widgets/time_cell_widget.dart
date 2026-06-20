@@ -3,14 +3,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// Time cell of timer pace widget
 class TimeCellWidget extends ConsumerWidget {
-  const TimeCellWidget({super.key, required this.textEditingController});
+  /// init
+  const TimeCellWidget({required this.textEditingController, super.key});
 
+  /// cell controller
   final TextEditingController textEditingController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
+        /// arrow up
         TextButton(
           onPressed: () {},
           style: const ButtonStyle(
@@ -24,13 +27,14 @@ class TimeCellWidget extends ConsumerWidget {
             size: 40,
           ),
         ),
+
+        /// cell with number
         IntrinsicWidth(
-          child: Container(
+          child: SizedBox(
             height: 120,
             child: TextFormField(
               controller: textEditingController,
               maxLines: null,
-              minLines: null,
               expands: true,
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -51,15 +55,17 @@ class TimeCellWidget extends ConsumerWidget {
                 isCollapsed: false,
                 focusColor: Colors.greenAccent.shade700,
                 border: const OutlineInputBorder(borderSide: BorderSide.none),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white12, width: 1),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white12),
                 ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 15),
               ),
               keyboardType: TextInputType.number,
             ),
           ),
         ),
+
+        /// arrow down
         TextButton(
           onPressed: () {},
           style: const ButtonStyle(

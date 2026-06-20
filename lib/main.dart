@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:swim_success/core/router/router.dart';
-import 'core/theme/theme.dart';
+import 'package:swim_success/core/theme/theme.dart';
 
 void main() {
   runApp(ProviderScope(child: _MyApp()));

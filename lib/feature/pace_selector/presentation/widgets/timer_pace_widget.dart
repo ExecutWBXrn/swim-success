@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:swim_success/core/extension/color_extension.dart';
+import 'package:swim_success/core/extension/theme_extension.dart';
 import 'package:swim_success/feature/pace_selector/presentation/widgets/widgets.dart';
 
 /// timer to set a user swim pace
 class TimerPaceWidget extends HookConsumerWidget {
+  /// init
   const TimerPaceWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formKey = useMemoized(() => GlobalKey<FormState>());
+    final formKey = useMemoized(GlobalKey<FormState>.new);
 
     final minutesTextFormController = useTextEditingController(
       text: 1.toString(),
@@ -21,7 +24,7 @@ class TimerPaceWidget extends HookConsumerWidget {
     return Column(
       children: [
         const Text(
-          "YOUR PACE",
+          'YOUR PACE',
           style: TextStyle(
             color: Colors.white54,
             fontSize: 12,
@@ -35,9 +38,9 @@ class TimerPaceWidget extends HookConsumerWidget {
             children: [
               TimeCellWidget(textEditingController: minutesTextFormController),
               Text(
-                ":",
+                ':',
                 style: TextStyle(
-                  color: Colors.greenAccent.shade400,
+                  color: context.theme.appColors.secondary,
                   fontSize: 100,
                 ),
               ),
@@ -49,7 +52,7 @@ class TimerPaceWidget extends HookConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "MIN : SEC",
+              'MIN : SEC',
               style: TextStyle(
                 color: Colors.white54,
                 fontWeight: FontWeight.w900,
@@ -57,7 +60,7 @@ class TimerPaceWidget extends HookConsumerWidget {
             ),
             SizedBox(width: 20),
             Text(
-              "/",
+              '/',
               style: TextStyle(
                 color: Colors.white54,
                 fontWeight: FontWeight.w900,
@@ -65,7 +68,7 @@ class TimerPaceWidget extends HookConsumerWidget {
             ),
             SizedBox(width: 20),
             Text(
-              "100M",
+              '100M',
               style: TextStyle(
                 color: Colors.white54,
                 fontWeight: FontWeight.w900,
