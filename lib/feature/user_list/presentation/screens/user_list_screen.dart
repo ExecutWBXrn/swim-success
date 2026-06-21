@@ -3,7 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+/// User list screen
 class UserListScreen extends HookConsumerWidget {
+  /// init
   const UserListScreen({super.key});
 
   @override
@@ -30,12 +32,10 @@ class UserListScreen extends HookConsumerWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 filled: true,
-                fillColor: Colors.grey.withOpacity(0.1),
+                fillColor: Colors.grey.withAlpha(25),
               ),
             ),
           ),
-
-          // Список
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {

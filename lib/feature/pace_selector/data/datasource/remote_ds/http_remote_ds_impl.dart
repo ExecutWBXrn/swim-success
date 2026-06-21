@@ -17,7 +17,7 @@ HttpRemoteDs httpRemoteDsImpl(Ref ref) {
 /// Http remote ds implementation
 final class HttpRemoteDsImpl implements HttpRemoteDs {
   /// impl
-  HttpRemoteDsImpl({required this.dio});
+  const HttpRemoteDsImpl({required this.dio});
 
   /// dio
   final Dio dio;

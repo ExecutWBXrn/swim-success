@@ -15,7 +15,7 @@ FetchUserListUseCase fetchUserListUseCase(Ref ref) =>
 /// fetching list of users use case
 final class FetchUserListUseCase {
   /// init
-  FetchUserListUseCase({
+  const FetchUserListUseCase({
     required HttpUserRepository repository,
   }) : _repository = repository;
 

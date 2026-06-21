@@ -16,7 +16,7 @@ HttpRemoteUserDs httpRemoteUserDs(Ref ref) =>
 /// data source impl of [HttpRemoteUserDs]
 final class HttpRemoteUserDsImpl implements HttpRemoteUserDs {
   /// init
-  HttpRemoteUserDsImpl({
+  const HttpRemoteUserDsImpl({
     required this.dio,
   });
 

@@ -16,7 +16,7 @@ HttpUserRepository httpUserRepositoryImpl(Ref ref) =>
 /// Http user repository implements [HttpUserRepository]
 final class HttpUserRepositoryImpl implements HttpUserRepository {
   /// init
-  HttpUserRepositoryImpl({
+  const HttpUserRepositoryImpl({
     required HttpRemoteUserDs remoteUserDs,
   }) : _remoteUserDs = remoteUserDs;
 
