@@ -8,5 +8,10 @@ part 'theme.g.dart';
 @riverpod
 ThemeData theme(Ref _) => ThemeData(
   scaffoldBackgroundColor: AppColors().background,
+  appBarTheme: AppBarTheme(
+    backgroundColor: AppColors().background,
+    iconTheme: const IconThemeData(color: Colors.white),
+    titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+  ),
   buttonTheme: ButtonThemeData(buttonColor: AppColors().beginner),
 );

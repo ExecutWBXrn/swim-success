@@ -44,7 +44,7 @@ final class PostPaceNotifierProvider
   }
 }
 
-String _$postPaceNotifierHash() => r'e61671de5018c495264742808dcaafd74df744ff';
+String _$postPaceNotifierHash() => r'd458841e1555570c169e351d41e9bd3ee913afbb';
 
 /// Post pace notifier
 

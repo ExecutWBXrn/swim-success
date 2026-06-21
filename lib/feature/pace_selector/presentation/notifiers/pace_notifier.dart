@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:swim_success/feature/pace_selector/domain/entities/pace_entity.dart';
+import 'package:swim_success/shared/domain/entities/pace_entity.dart';
 
 part 'pace_notifier.g.dart';
 

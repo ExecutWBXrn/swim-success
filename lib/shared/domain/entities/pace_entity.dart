@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:swim_success/feature/pace_selector/domain/enum/pace_state_enum.dart';
+import 'package:swim_success/shared/domain/enum/pace_state_enum.dart';
 
 /// pace entity
 @immutable
-class PaceEntity {
+final class PaceEntity {
   /// init
   const PaceEntity({
     required this.stateType,

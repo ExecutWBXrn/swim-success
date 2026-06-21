@@ -13,17 +13,16 @@ sealed class Failure {
 /// Failure of server
 class ServerFailure extends Failure {
   /// init
-  ServerFailure({super.code, super.message});
+  ServerFailure({super.code}) : super(message: 'Server failure');
 }
 
-/// Cache failure
-class CacheFailure extends Failure {
+/// Client error
+class ClientFailure extends Failure {
   /// init
-  CacheFailure({super.message});
+  ClientFailure({super.code}) : super(message: 'Client failure');
 }
 
-/// Network error
 class NetworkFailure extends Failure {
   /// init
-  NetworkFailure() : super(message: 'No internet connection');
+  NetworkFailure({super.code}) : super(message: 'Network failure');
 }

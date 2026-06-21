@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:swim_success/core/extension/color_extension.dart';
 import 'package:swim_success/core/extension/theme_extension.dart';
-import 'package:swim_success/feature/pace_selector/domain/enum/pace_state_enum.dart';
-import 'package:swim_success/feature/pace_selector/domain/usecases/post_pace_use_case.dart';
 import 'package:swim_success/feature/pace_selector/presentation/notifiers/pace_notifier.dart';
 import 'package:swim_success/feature/pace_selector/presentation/notifiers/post_pace_notifier.dart';
 import 'package:swim_success/feature/pace_selector/presentation/widgets/widgets.dart';
+import 'package:swim_success/shared/domain/enum/pace_state_enum.dart';
 
 /// pace selector screen with 100m fastest user run
 class PaceSelectorScreen extends ConsumerWidget {
@@ -63,7 +62,6 @@ class PaceSelectorScreen extends ConsumerWidget {
         );
       } else if (prev?.isLoading == true) {
         Navigator.of(context).pop();
-
         if (next.hasError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -75,6 +73,7 @@ class PaceSelectorScreen extends ConsumerWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Дані успішно збережено!')),
           );
+          await context.pushNamed('UserList');
         }
       }
     });
@@ -175,7 +174,9 @@ class PaceSelectorScreen extends ConsumerWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await context.pushNamed('UserList');
+                  },
                   child: const Text(
                     "I don't know my pace, skip this",
                     style: TextStyle(

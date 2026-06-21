@@ -16,5 +16,19 @@ GoRouter router(Ref _) => GoRouter(
         return const PaceSelectorScreen();
       },
     ),
+    GoRoute(
+      path: '/user_list',
+      name: 'UserList',
+      builder: (context, state) {
+        return const UserListScreen();
+      },
+    ),
+    GoRoute(
+      path: '/user_details',
+      name: 'UserDetails',
+      builder: (context, state) {
+        return const UserDetailScreen();
+      },
+    ),
   ],
 );

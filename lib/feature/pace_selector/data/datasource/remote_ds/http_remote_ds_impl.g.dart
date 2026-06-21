@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'http_remote_ds.dart';
+part of 'http_remote_ds_impl.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -10,28 +10,28 @@ part of 'http_remote_ds.dart';
 // ignore_for_file: type=lint, type=warning
 /// http remote ds provider
 
-@ProviderFor(httpRemoteDs)
-final httpRemoteDsProvider = HttpRemoteDsProvider._();
+@ProviderFor(httpRemoteDsImpl)
+final httpRemoteDsImplProvider = HttpRemoteDsImplProvider._();
 
 /// http remote ds provider
 
-final class HttpRemoteDsProvider
+final class HttpRemoteDsImplProvider
     extends $FunctionalProvider<HttpRemoteDs, HttpRemoteDs, HttpRemoteDs>
     with $Provider<HttpRemoteDs> {
   /// http remote ds provider
-  HttpRemoteDsProvider._()
+  HttpRemoteDsImplProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'httpRemoteDsProvider',
+        name: r'httpRemoteDsImplProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$httpRemoteDsHash();
+  String debugGetCreateSourceHash() => _$httpRemoteDsImplHash();
 
   @$internal
   @override
@@ -40,7 +40,7 @@ final class HttpRemoteDsProvider
 
   @override
   HttpRemoteDs create(Ref ref) {
-    return httpRemoteDs(ref);
+    return httpRemoteDsImpl(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -52,4 +52,4 @@ final class HttpRemoteDsProvider
   }
 }
 
-String _$httpRemoteDsHash() => r'80deb0b731e60bd035fc444c2ea760698b8bd0bc';
+String _$httpRemoteDsImplHash() => r'8bbbf7bdf2457a20fabe67d109ad19ebe0ffbace';
