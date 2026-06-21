@@ -31,10 +31,13 @@ class TimerPaceWidget extends HookConsumerWidget {
     useEffect(() {
       void formatSeconds() {
         if (!secondsFocusNode.hasFocus) {
-          final currentSec = int.tryParse(secondsTextFormController.text) ?? 0;
+          final currentSec =
+              (int.tryParse(secondsTextFormController.text) ?? 0) % 60;
           final secStr = currentSec < 10
               ? '0$currentSec'
               : currentSec.toString();
+
+          formKey.currentState?.validate();
 
           if (secondsTextFormController.text != secStr) {
             secondsTextFormController.text = secStr;
@@ -51,6 +54,8 @@ class TimerPaceWidget extends HookConsumerWidget {
       final secStr = secondsWithoutMinutes < 10
           ? '0$secondsWithoutMinutes'
           : secondsWithoutMinutes.toString();
+
+      formKey.currentState?.validate();
 
       if (!minutesFocusNode.hasFocus &&
           minutesTextFormController.text != minStr) {

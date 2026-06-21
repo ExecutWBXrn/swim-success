@@ -5,11 +5,17 @@ part 'http_service.g.dart';
 
 /// dio riverpod getter
 @riverpod
-Dio dio(Ref _) => Dio(
-  BaseOptions(
-    baseUrl: 'https://jsonplaceholder.typicode.com',
-    connectTimeout: const Duration(seconds: 8),
-    receiveTimeout: const Duration(seconds: 8),
-    sendTimeout: const Duration(seconds: 8),
-  ),
-);
+Dio dio(Ref _) {
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: 'https://jsonplaceholder.typicode.com/',
+      connectTimeout: const Duration(seconds: 8),
+      receiveTimeout: const Duration(seconds: 8),
+      sendTimeout: const Duration(seconds: 8),
+    ),
+  );
+
+  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+
+  return dio;
+}

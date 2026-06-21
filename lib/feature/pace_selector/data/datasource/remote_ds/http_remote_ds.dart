@@ -24,9 +24,9 @@ class HttpRemoteDs {
   /// post request
   Future<Either<Failure, void>> postRequest(int seconds) async {
     try {
-      await dio.post<dynamic>(
+      await dio.post<Map<String, dynamic>>(
         'posts',
-        queryParameters: {'pace_seconds': seconds},
+        data: {'pace_seconds': seconds},
       );
 
       return Either.right(null);

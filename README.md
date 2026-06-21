@@ -37,14 +37,14 @@ pace_notifier responsible for entity that contains double seconds and PaceStateE
 
     /// pace state
     enum PaceStateEnum {
-    /// beginner
-    beginner,
-    /// intermediate
-    intermediate,
-    /// advanced
-    advanced,
-    /// elite
-    elite,
+        /// beginner
+        beginner,
+        /// intermediate
+        intermediate,
+        /// advanced
+        advanced,
+        /// elite
+        elite,
     }
 
 [pace input] is Form() with 2 TextFormField(), that defined as timer_pace_widget and time_cell_widet in project,
@@ -96,6 +96,8 @@ from seconds to slider range:
             return (sec - 45) / 225;
         }
     }
+
+post_pace_notifier responsible for post request of pace seconds of user to https://jsonplaceholder.typicode.com/posts which was made up via dio that defined in core/services/http_service.dart and responsible to display showDialog when its loading/success/error after pressing continue button
 
 ### UI:
 

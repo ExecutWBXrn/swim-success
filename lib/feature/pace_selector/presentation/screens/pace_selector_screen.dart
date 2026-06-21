@@ -19,57 +19,62 @@ class PaceSelectorScreen extends ConsumerWidget {
     final paceValue = ref.watch(paceProvider);
 
     ref.listen(postPaceProvider, (prev, next) async {
-      if (next.isLoading || next.hasError) {
-        if (next.isLoading) {
-          await showDialog<String>(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => Dialog(
-              backgroundColor: Colors.white54,
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: 30,
-                      height: 30,
-                      child: CircularProgressIndicator(
-                        color: switch (paceValue.stateType) {
-                          PaceStateEnum.beginner =>
-                            context.theme.appColors.beginner,
-                          PaceStateEnum.intermediate =>
-                            context.theme.appColors.intermediate,
-                          PaceStateEnum.advanced =>
-                            context.theme.appColors.advanced,
-                          PaceStateEnum.elite => context.theme.appColors.elite,
-                        },
-                      ),
+      if (next.isLoading) {
+        await showDialog<String>(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => Dialog(
+            backgroundColor: Colors.white54,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(
+                      color: switch (paceValue.stateType) {
+                        PaceStateEnum.beginner =>
+                          context.theme.appColors.beginner,
+                        PaceStateEnum.intermediate =>
+                          context.theme.appColors.intermediate,
+                        PaceStateEnum.advanced =>
+                          context.theme.appColors.advanced,
+                        PaceStateEnum.elite => context.theme.appColors.elite,
+                      },
                     ),
-                    const SizedBox(
-                      width: 15,
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  const Text(
+                    'Завантаження...',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
                     ),
-                    const Text(
-                      'Завантаження...',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          );
-        } else if (prev?.isLoading == true) {
-          Navigator.of(context).pop();
+          ),
+        );
+      } else if (prev?.isLoading == true) {
+        Navigator.of(context).pop();
 
-          if (next.hasError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Помилка: ${next.error}')),
-            );
-          }
+        if (next.hasError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Помилка: ${next.error}'),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Дані успішно збережено!')),
+          );
         }
       }
     });

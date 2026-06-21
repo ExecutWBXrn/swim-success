@@ -22,11 +22,11 @@ class PostPaceNotifier extends _$PostPaceNotifier {
     final request = await useCase.call(seconds);
 
     request.fold(
-      (failure) => AsyncError<dynamic>(
+      (failure) => state = AsyncError<dynamic>(
         failure.message ?? 'server error',
         StackTrace.current,
       ),
-      (success) => const AsyncData(null),
+      (success) => state = const AsyncData(null),
     );
   }
 }
