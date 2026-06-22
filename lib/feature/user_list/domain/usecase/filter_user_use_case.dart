@@ -3,6 +3,8 @@ import 'package:swim_success/feature/user_list/domain/entities/user_entity.dart'
 import 'package:swim_success/feature/user_list/presentation/notifiers/query_notifier.dart';
 import 'package:swim_success/feature/user_list/presentation/notifiers/user_list_notifier.dart';
 
+part 'filter_user_use_case.g.dart';
+
 /// filter user use case call provider
 @riverpod
 List<UserEntity> filterUserUseCaseCall(Ref ref) {
