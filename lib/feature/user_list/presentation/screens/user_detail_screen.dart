@@ -1,85 +1,155 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:swim_success/core/extension/color_extension.dart';
+import 'package:swim_success/core/extension/theme_extension.dart';
+import 'package:swim_success/feature/user_list/domain/usecase/fetch_user_by_id_use_case.dart';
+import 'package:swim_success/feature/user_list/presentation/notifiers/user_list_notifier.dart';
+import 'package:swim_success/shared/domain/enum/pace_state_enum.dart';
 
+/// User detain screen
 class UserDetailScreen extends HookConsumerWidget {
-  const UserDetailScreen({super.key});
+  /// init
+  const UserDetailScreen({this.id, super.key});
+
+  /// id of user
+  final String? id;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(fetchUserByIdUseCaseCallProvider(id));
+    final usersAsyncValue = ref.watch(userListProvider);
+
+    final isUserNull = user == null;
+
+    final color = isUserNull
+        ? Colors.white
+        : switch (user.pace.stateType) {
+            PaceStateEnum.beginner => context.theme.appColors.beginner,
+            PaceStateEnum.intermediate => context.theme.appColors.intermediate,
+            PaceStateEnum.advanced => context.theme.appColors.advanced,
+            PaceStateEnum.elite => context.theme.appColors.elite,
+          };
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Details'),
+        title: Text(isUserNull ? 'User Details' : user.name),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Верхня частина: Аватарка та Ім'я
-            const Center(
-              child: CircleAvatar(
-                radius: 50,
-                child: Icon(Icons.person, size: 50),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: usersAsyncValue.when(
+            data: (_) => Column(
+              children: [
+                Center(
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.greenAccent.withAlpha(10),
+                    child: isUserNull
+                        ? const Icon(Icons.person, size: 50)
+                        : Text(
+                            user.name.substring(0, 1),
+                            style: TextStyle(color: color, fontSize: 50),
+                          ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  isUserNull ? 'no name' : user.name,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  isUserNull ? '-' : user.pace.stateType.name.toUpperCase(),
+                  style: TextStyle(
+                    color: isUserNull ? Colors.grey : color,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  color: Colors.white24,
+                  child: Column(
+                    children: [
+                      _buildDetailTile(
+                        Icons.email,
+                        'Email',
+                        isUserNull ? '-' : user.email,
+                        color,
+                      ),
+                      const Divider(height: 1),
+                      _buildDetailTile(
+                        Icons.phone,
+                        'Phone',
+                        isUserNull ? '-' : user.phone,
+                        color,
+                      ),
+                      const Divider(height: 1),
+                      _buildDetailTile(
+                        Icons.workspace_premium,
+                        'Level',
+                        isUserNull
+                            ? '-'
+                            : user.pace.stateType.name.toUpperCase(),
+                        color,
+                      ),
+                      const Divider(height: 1),
+                      _buildDetailTile(
+                        Icons.language,
+                        'SEC / 100M',
+                        isUserNull ? '-' : user.pace.seconds.toString(),
+                        color,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            error: (e, st) => Center(
+              child: Text('Error: $e'),
+            ),
+            loading: () => Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                backgroundColor: context.theme.appColors.secondary,
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              'John Doe',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              '@johndoe_dev',
-              style: TextStyle(color: Colors.grey, fontSize: 16),
-            ),
-            const SizedBox(height: 24),
-
-            // Картка з інформацією
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                children: [
-                  _buildDetailTile(
-                    Icons.email,
-                    'Email',
-                    'john.doe@example.com',
-                  ),
-                  const Divider(height: 1),
-                  _buildDetailTile(Icons.phone, 'Phone', '+380 99 123 45 67'),
-                  const Divider(height: 1),
-                  _buildDetailTile(
-                    Icons.location_on,
-                    'Address',
-                    'Street Name, 123, Kyiv',
-                  ),
-                  const Divider(height: 1),
-                  _buildDetailTile(
-                    Icons.language,
-                    'Website',
-                    'www.johndoe.dev',
-                  ),
-                  const Divider(height: 1),
-                  _buildDetailTile(Icons.work, 'Company', 'Best Software Inc.'),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildDetailTile(IconData icon, String label, String value) {
+  Widget _buildDetailTile(
+    IconData icon,
+    String label,
+    String value,
+    Color valueColor,
+  ) {
     return ListTile(
-      leading: Icon(icon, color: Colors.blue),
+      leading: Icon(icon, color: valueColor),
       title: Text(
         label,
-        style: const TextStyle(fontSize: 12, color: Colors.grey),
+        style: const TextStyle(
+          fontSize: 12,
+          color: Colors.white54,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       subtitle: Text(
         value,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: valueColor,
+        ),
       ),
     );
   }

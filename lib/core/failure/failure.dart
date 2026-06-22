@@ -1,5 +1,5 @@
 /// Failure interface
-sealed class Failure {
+sealed class Failure implements Exception {
   /// init
   Failure({this.code, this.message});
 
@@ -22,6 +22,7 @@ class ClientFailure extends Failure {
   ClientFailure({super.code}) : super(message: 'Client failure');
 }
 
+/// Network error
 class NetworkFailure extends Failure {
   /// init
   NetworkFailure({super.code}) : super(message: 'Network failure');

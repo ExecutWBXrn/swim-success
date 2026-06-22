@@ -24,12 +24,13 @@ Feature contains features which split entire app on not reliable parts, each fea
 
 Shared contains as well as feature contains presentation/domain/data, but this folders in reliable by other features
 
+for DI i using riverpod providers for every bit of business logic
 
 ## TASK 1
 
 ### DOCS:
 
-1 task took 2 notifiers, first one pace_notifier
+1 task took 2 notifiers, first one pace_notifier, and seconds one is post_pace_notifier
 
 pace_notifier responsible for entity that contains double seconds and PaceStateEnum such as slider value, UI color components and pace input
 
@@ -104,3 +105,28 @@ post_pace_notifier responsible for post request of pace seconds of user to https
 note: Have used SafeArea + Padding + SingleChildScrollView, there one more button on bottom that is not visible on screen but reachable by scroll ("I don't know my pace, skip this" button)
 
 ![img.png](img.png)
+
+### DOCS:
+
+2 task took 2 notifiers, first one user_list_notifier, and seconds one is query_notifier
+
+user_list_notifier responsible for List<UserEntity> with users from API and updates of state on 2 screens that comes through [http_remote_user_ds.dart] → [http_user_repository_impl] → [fetch_user_list_use_case] → [user_list_notifier]
+
+query_notifier responsible for notifying [filter_user_use_case] with new symbols
+
+fetch_user_list_use_case returns value of method fetchListOfUserEntities of repository [http_user_repository_impl]
+
+filter_user_case watching [user_list_notifier] and [query_notifier] for updates, if [user_list_notifier] return data then [filter_user_case] returns filtered data by names of users that contains value of [query_notifier]
+
+fetch_user_by_id_use_case watching [user_list_notifier] and taking argument id, and return user that match user.id == id
+
+### UI:
+
+User list screen :
+
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+
+User details screen
+
+![img_3.png](img_3.png)

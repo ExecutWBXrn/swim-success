@@ -26,7 +26,7 @@ final class HttpRemoteUserDsImpl implements HttpRemoteUserDs {
   @override
   Future<Either<Failure, List<UserModel>>> fetchUsers() async {
     try {
-      final response = await dio.get<List<Map<String, dynamic>>>('users');
+      final response = await dio.get<List<dynamic>>('users');
 
       final statusCode = response.statusCode;
 
@@ -44,7 +44,9 @@ final class HttpRemoteUserDsImpl implements HttpRemoteUserDs {
         return Either.right([]);
       }
 
-      final listOfModels = data.map(UserModel.fromJson).toList();
+      final listOfModels = data
+          .map((el) => UserModel.fromJson(el as Map<String, dynamic>))
+          .toList();
 
       return Either.right(listOfModels);
     } on DioException catch (e) {

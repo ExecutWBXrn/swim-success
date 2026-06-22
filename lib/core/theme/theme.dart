@@ -11,7 +11,11 @@ ThemeData theme(Ref _) => ThemeData(
   appBarTheme: AppBarTheme(
     backgroundColor: AppColors().background,
     iconTheme: const IconThemeData(color: Colors.white),
-    titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+    titleTextStyle: const TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
   ),
   buttonTheme: ButtonThemeData(buttonColor: AppColors().beginner),
 );

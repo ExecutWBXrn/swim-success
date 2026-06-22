@@ -24,10 +24,14 @@ GoRouter router(Ref _) => GoRouter(
       },
     ),
     GoRoute(
-      path: '/user_details',
+      path: '/user_list/:user_id',
       name: 'UserDetails',
       builder: (context, state) {
-        return const UserDetailScreen();
+        final id = state.pathParameters['user_id'];
+
+        return UserDetailScreen(
+          id: id,
+        );
       },
     ),
   ],

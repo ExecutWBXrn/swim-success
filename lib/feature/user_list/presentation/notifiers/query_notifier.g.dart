@@ -8,12 +8,15 @@ part of 'query_notifier.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// query for filtering users
 
 @ProviderFor(QueryNotifier)
 final queryProvider = QueryNotifierProvider._();
 
+/// query for filtering users
 final class QueryNotifierProvider
     extends $NotifierProvider<QueryNotifier, String> {
+  /// query for filtering users
   QueryNotifierProvider._()
     : super(
         from: null,
@@ -42,6 +45,8 @@ final class QueryNotifierProvider
 }
 
 String _$queryNotifierHash() => r'2171a66ae0a884ba65831030bba257618610e843';
+
+/// query for filtering users
 
 abstract class _$QueryNotifier extends $Notifier<String> {
   String build();

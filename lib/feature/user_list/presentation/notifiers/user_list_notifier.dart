@@ -7,27 +7,19 @@ part 'user_list_notifier.g.dart';
 /// user list notifier
 @riverpod
 class UserListNotifier extends _$UserListNotifier {
-  late final FetchUserListUseCase _fetchUserListUseCase;
-
   @override
-  FutureOr<List<UserEntity>> build() {
-    _fetchUserListUseCase = ref.read(fetchUserListUseCaseProvider);
-    return [];
+  FutureOr<List<UserEntity>> build() async {
+    final fetchUserListUseCase = ref.watch(fetchUserListUseCaseProvider);
+
+    final entities = await fetchUserListUseCase();
+
+    return entities.fold((failure) => throw failure, (users) => users);
   }
 
-  /// load users / refresh
-  Future<void> loadUsers() async {
-    state = const AsyncLoading();
+  /// refresh
+  Future<void> refresh() async {
+    ref.invalidateSelf();
 
-    final entities = await _fetchUserListUseCase();
-
-    entities.fold(
-      (failure) {
-        state = AsyncValue.error(failure, StackTrace.current);
-      },
-      (users) {
-        state = AsyncValue.data(users);
-      },
-    );
+    await future;
   }
 }
