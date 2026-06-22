@@ -106,6 +106,8 @@ note: Have used SafeArea + Padding + SingleChildScrollView, there one more butto
 
 ![img.png](img.png)
 
+## TASK 2
+
 ### DOCS:
 
 2 task took 2 notifiers, first one user_list_notifier, and seconds one is query_notifier
